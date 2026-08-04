@@ -3,7 +3,7 @@ import type { TodayGoal } from '../types';
 import { getItem, setItem, StorageKeys } from '../services/storage';
 
 const INITIAL_GOALS: TodayGoal[] = [
-  { id: 'goal-1', title: 'Review project specs for LUMA v1.0', completed: true, createdAt: Date.now() - 7200000 },
+  { id: 'goal-1', title: 'Review project specs for SYNORA v1.0', completed: true, createdAt: Date.now() - 7200000 },
   { id: 'goal-2', title: 'Complete deep focus session in Focus Studio', completed: false, createdAt: Date.now() - 3600000 },
   { id: 'goal-3', title: 'Organize design bookmarks in Link Vault', completed: false, createdAt: Date.now() - 1800000 },
 ];

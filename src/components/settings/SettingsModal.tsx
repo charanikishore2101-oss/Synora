@@ -13,6 +13,7 @@ import {
 import { useSettingsStore } from '../../store/useSettingsStore';
 import type { ThemeId, AccentColor, CursorMode } from '../../types';
 import { clearAllData, getItem, setItem, StorageKeys } from '../../services/storage';
+import { synoraAudio } from '../../services/audio';
 
 interface SettingsModalProps {
   isOpen: boolean;
@@ -101,7 +102,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
           <div className="flex items-center justify-between p-4 border-b border-white/10">
             <div className="flex items-center gap-2">
               <Settings className="w-5 h-5 text-violet-400" />
-              <h3 className="text-base font-semibold text-white">LUMA Preferences & Customization</h3>
+              <h3 className="text-base font-semibold text-white">SYNORA Preferences &amp; Customization</h3>
             </div>
             <button
               onClick={onClose}
@@ -277,30 +278,81 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                   </div>
                 </div>
 
+                <div className="pt-4 border-t border-white/10 space-y-2">
+                  <h4 className="font-semibold text-white mb-1">Launch Experience &amp; Sound</h4>
+                  <div className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10">
+                    <div>
+                      <span className="text-xs font-semibold text-white block">Desktop Demo Mode</span>
+                      <span className="text-[11px] text-gray-400">Launch into simulated Windows 11 desktop with app icon launch flow.</span>
+                    </div>
+                    <button
+                      onClick={() => updateSettings({ desktopDemoMode: !settings.desktopDemoMode })}
+                      className={`w-12 h-6 rounded-full transition-colors relative p-0.5 ${
+                        settings.desktopDemoMode ? 'bg-violet-600' : 'bg-white/20'
+                      }`}
+                    >
+                      <span
+                        className={`block w-5 h-5 rounded-full bg-white transition-transform ${
+                          settings.desktopDemoMode ? 'translate-x-6' : 'translate-x-0'
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  <div className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10">
+                    <div>
+                      <span className="text-xs font-semibold text-white block">Desktop Sound Effects</span>
+                      <span className="text-[11px] text-gray-400">Optional procedural Web Audio chimes and launch sounds.</span>
+                    </div>
+                    <button
+                      onClick={() => synoraAudio.setSoundEnabled(!synoraAudio.isSoundEnabled())}
+                      className={`w-12 h-6 rounded-full transition-colors relative p-0.5 ${
+                        synoraAudio.isSoundEnabled() ? 'bg-violet-600' : 'bg-white/20'
+                      }`}
+                    >
+                      <span
+                        className={`block w-5 h-5 rounded-full bg-white transition-transform ${
+                          synoraAudio.isSoundEnabled() ? 'translate-x-6' : 'translate-x-0'
+                        }`}
+                      />
+                    </button>
+                  </div>
+                </div>
+
                 <div className="pt-4 border-t border-white/10">
-                  <h4 className="font-semibold text-white mb-1">Reset LUMA</h4>
-                  <p className="text-gray-400 text-xs mb-3">Reset settings or replay the onboarding tour.</p>
-                  <div className="flex gap-2">
+                  <h4 className="font-semibold text-white mb-1">Reset &amp; Replay SYNORA</h4>
+                  <p className="text-gray-400 text-xs mb-3">Replay the product intro, onboarding tour, or clear storage.</p>
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      onClick={() => {
+                        sessionStorage.removeItem('synora_intro_seen');
+                        window.location.reload();
+                      }}
+                      className="px-3 py-1.5 bg-violet-600/30 hover:bg-violet-600/50 text-violet-300 rounded-lg text-xs font-semibold border border-violet-500/30"
+                    >
+                      Replay Cinematic Intro
+                    </button>
+
                     <button
                       onClick={() => {
                         updateSettings({ onboardingCompleted: false });
                         onClose();
                       }}
-                      className="px-3 py-1.5 bg-white/10 text-gray-300 hover:text-white rounded-lg"
+                      className="px-3 py-1.5 bg-white/10 text-gray-300 hover:text-white rounded-lg text-xs"
                     >
                       Replay Onboarding Tour
                     </button>
 
                     <button
                       onClick={async () => {
-                        if (confirm('Are you sure you want to clear all LUMA data and reset to defaults?')) {
+                        if (confirm('Are you sure you want to clear all SYNORA data and reset to defaults?')) {
                           await clearAllData();
                           window.location.reload();
                         }
                       }}
-                      className="px-3 py-1.5 bg-red-500/20 text-red-300 hover:bg-red-500/30 rounded-lg"
+                      className="px-3 py-1.5 bg-red-500/20 text-red-300 hover:bg-red-500/30 rounded-lg text-xs"
                     >
-                      Clear All LocalForage Data
+                      Clear LocalForage Data
                     </button>
                   </div>
                 </div>

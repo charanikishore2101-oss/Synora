@@ -63,6 +63,8 @@ export function ClipboardTimeline() {
 
   const getCategoryBadge = (category: ClipboardCategory) => {
     switch (category) {
+      case 'color':
+        return <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono bg-pink-500/20 text-pink-300"><Sparkles className="w-3 h-3" /> Color</span>;
       case 'link':
         return <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono bg-blue-500/20 text-blue-300"><Link className="w-3 h-3" /> Link</span>;
       case 'email':
@@ -128,7 +130,7 @@ export function ClipboardTimeline() {
 
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 mb-4">
         <div className="flex items-center gap-1 overflow-x-auto pb-1 scrollbar-none">
-          {(['all', 'text', 'link', 'code', 'email', 'phone'] as const).map((cat) => (
+          {(['all', 'color', 'text', 'link', 'code', 'email', 'phone'] as const).map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}

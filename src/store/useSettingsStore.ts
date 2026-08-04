@@ -27,6 +27,7 @@ const DEFAULT_SETTINGS: UserSettings = {
     focus: true,
   },
   onboardingCompleted: false,
+  desktopDemoMode: true,
 };
 
 interface SettingsState {
@@ -57,7 +58,7 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
       };
       set({ settings: merged, isLoaded: true });
     } catch (err) {
-      console.error('[LUMA Settings] Error loading settings:', err);
+      console.error('[SYNORA Settings] Error loading settings:', err);
       set({ settings: DEFAULT_SETTINGS, isLoaded: true });
     }
   },

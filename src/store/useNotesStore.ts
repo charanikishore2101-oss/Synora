@@ -11,8 +11,8 @@ const INITIAL_FOLDERS: NoteFolder[] = [
 const INITIAL_NOTES: Note[] = [
   {
     id: 'note-welcome',
-    title: '🚀 Welcome to LUMA Quick Notes',
-    content: `<h2>Welcome to LUMA Quick Notes!</h2><p>This is a full Markdown &amp; Rich Text TipTap editor built right into your start page.</p><ul><li><p><strong>Checklists:</strong> Track your tasks instantly</p></li><li><p><strong>Code blocks:</strong> Store code snippets with formatting</p></li><li><p><strong>Folders &amp; Tags:</strong> Organize ideas effortlessly</p></li></ul><p>Start writing by creating a new note or modifying this draft!</p>`,
+    title: '🚀 Welcome to SYNORA Quick Notes',
+    content: `<h2>Welcome to SYNORA Quick Notes!</h2><p>This is a full Markdown &amp; Rich Text TipTap editor built right into your personal productivity companion.</p><ul><li><p><strong>Checklists:</strong> Track your tasks instantly</p></li><li><p><strong>Code blocks:</strong> Store code snippets with formatting</p></li><li><p><strong>Folders &amp; Tags:</strong> Organize ideas effortlessly</p></li></ul><p>Start writing by creating a new note or modifying this draft!</p>`,
     folderId: 'ideas',
     tags: ['welcome', 'guide'],
     pinned: true,

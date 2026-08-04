@@ -42,7 +42,7 @@ class ErrorBoundary extends Component<Props, State> {
           textAlign: 'center',
           fontFamily: 'sans-serif'
         }}>
-          <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '10px' }}>Something went wrong loading LUMA</h2>
+          <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '10px' }}>Something went wrong loading SYNORA</h2>
           <p style={{ color: '#9ca3af', marginBottom: '20px', maxWidth: '500px' }}>
             {this.state.error?.message || 'An unexpected error occurred while initializing the start page.'}
           </p>

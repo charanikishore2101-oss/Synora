@@ -34,7 +34,8 @@ export interface NoteFolder {
   icon?: string;
 }
 
-export type ClipboardCategory = 'text' | 'link' | 'email' | 'phone' | 'code';
+export type ClipboardCategory = 'text' | 'link' | 'email' | 'phone' | 'code' | 'color';
+
 
 export interface ClipboardItem {
   id: string;
@@ -123,4 +124,5 @@ export interface UserSettings {
     focus: boolean;
   };
   onboardingCompleted: boolean;
+  desktopDemoMode: boolean;
 }

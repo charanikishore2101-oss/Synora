@@ -1,177 +1,82 @@
-# LUMA — The Intelligent Start Page
+# SYNORA — Personal Productivity Companion
 
-> **Transforming the browser New Tab into the most beautiful and useful workspace on the internet.**
+> *"Everything you need. One shortcut away."*
 
----
+SYNORA is an ultra-premium, production-ready desktop productivity companion inspired by **Apple Spotlight**, **Raycast**, **Linear**, **Arc Browser**, and **Windows 11 Fluent Design**.
 
-## 🌟 Overview
-
-LUMA is an ultra-premium, production-ready intelligent start page application designed to replace default browser New Tab pages. It combines dynamic glassmorphic UI, an interactive living cursor physics engine, animated shader backgrounds, multi-engine universal search, markdown quick notes, clipboard history timeline, link vault bookmarking, pomodoro focus studio with Web Audio API ambient sounds, global command palette (`Ctrl+K`), and LocalForage offline persistence.
+It combines a Spotlight utility popup (`Ctrl + Space`), instant Quick Notes, auto-categorized Smart Clipboard timeline, Link Vault bookmark manager, standard/scientific expression Calculator, Pomodoro Focus Studio with procedural ambient sounds, multi-engine universal search, global command palette (`Ctrl + K`), and offline storage persistence.
 
 ---
 
-## 🚀 Key Features
+## ✨ Core Features
 
-### 1. 💫 Signature Living Cursor Engine
-- **Spring Physics & Elastic Interpolation**: Ultra-smooth follower dot that scales with velocity.
-- **Magnetic attraction**: Interactive buttons and action cards pull the cursor naturally (`data-magnetic`).
-- **3D Card Perspective Tilt**: Floating UI glass cards tilt in 3D space on hover (`data-tilt`).
-- **Canvas Particle Trail & Spotlight**: Particle trails and ambient radial spotlight modes.
-- **Ripples**: Hydrodynamic click ripple effects.
+1. **Spotlight Companion Popup (`700px × 520px`)**:
+   - Ultra-fast launch (<150ms) with soft spring physics (`stiffness: 450, damping: 32`).
+   - Integrated live Time, Date, Greeting, Weather, and Profile Avatar.
 
-### 2. 🌌 Aurora Background & Shader Engine
-- **Canvas Mesh Gradient**: Multi-orb animated ambient gradients with mouse spotlight tracking.
-- **Noise Texture Overlay**: Subtle SVG turbulence texturing for depth.
-- **Performance Optimization**: Automatically pauses animations when tab is hidden or reduced motion is enabled.
+2. **Unified Single Search List**:
+   - Keyboard-navigable single search results combining Google, GitHub, YouTube, Stack Overflow, Wikipedia, Notes, Clipboard, Link Vault, Commands, and Recent Items.
 
-### 3. 🔍 Universal Multi-Engine Search
-- **8 Search Engines**: Google, YouTube, GitHub, Stack Overflow, Wikipedia, Quick Notes, Clipboard History, and Link Vault.
-- **Keyboard Navigation**: Press `/` anywhere to focus search or `Ctrl+K` for global command palette.
-- **Instant Search & History**: Live internal match preview chips and saved search query history.
+3. **Intelligent Direct Expansion Workspace**:
+   - Seamless shared element layout transitions (`layoutId="synora-main-container"`) that morph the Spotlight popup directly into the requested target workspace module (`notes`, `clipboard`, `vault`, `calculator`, `focus`, `settings`, `dashboard`).
 
-### 4. 📝 Quick Notes (TipTap Editor)
-- **Rich Text & Markdown**: Headings, bold/italic, lists, blockquotes, code blocks, and interactive task checklists.
-- **Organization**: Category folders, tag filter, search, pin notes, and Markdown file export (`.md`).
+4. **Smart Clipboard Timeline (Hero Feature)**:
+   - Automatic category classification (`color`, `code`, `link`, `email`, `phone`, `text`).
+   - Live color swatch previews (`#hex` / `rgb`), category filtering pills, and 1-click copying.
 
-### 5. 📋 Clipboard Timeline
-- **Auto-Categorization**: Intelligently tags copied items into `Text`, `Link`, `Email`, `Phone`, or `Code`.
-- **History Management**: Search clipboard, pin items, copy back to system clipboard, or batch clear.
+5. **Integrated Calculator Engine**:
+   - Standard and scientific math expression parser (`sin`, `cos`, `tan`, `sqrt`, `log`, `ln`, `^`, `π`, `e`).
+   - History log tracking and 1-click answer copying.
 
-### 6. 🔖 Link Vault (Bookmark & Reading List)
-- **Automatic Metadata**: Generates title, description, domain, favicons, estimated reading time, and custom tags.
-- **Views**: Toggle between Grid and List layouts.
+6. **Instant Quick Note & URL Vault Capture**:
+   - Type in popup and press `Enter` to save a Quick Note instantly.
+   - Drag & drop or paste (`Ctrl + V`) a URL to automatically extract metadata (favicon, title, domain, description, category) and save to Link Vault.
 
-### 7. ⏱️ Focus Studio (Pomodoro & Ambient Audio)
-- **Pomodoro Timer**: Work, Short Break, and Long Break countdowns with SVG progress gauge.
-- **Web Audio API Procedural Synthesizer**: 100% offline ambient sound generators (Rain Storm, Ocean Waves, Forest Wind, White Noise, Cyberpunk Synth).
-- **Fullscreen Zen Mode**: Zero-distraction focus state with statistics tracking.
-
-### 8. ⌨️ Global Command Palette (`Ctrl + K` / `Cmd + K`)
-- Instant access to switch themes, navigate tabs, create notes, start focus timers, and manage layout.
-
-### 9. 🎨 Theme & Personalization Engine
-- **Themes**: Aurora Dark, OLED Midnight, Cyberpunk Glow, Sunset Flare, Minimal Light.
-- **Accents**: Electric Violet, Neon Cyan, Emerald Glow, Rose Gold, Sunset Amber.
-- **Data Backup & Restore**: Export/Import complete workspace backup JSON files.
-
-### 10. 🎯 Interactive Onboarding Walkthrough
-- Built-in multi-step feature tour for new users with replay option.
+7. **Desktop Demo Mode**:
+   - Realistic Windows 11 simulated desktop environment with taskbar, system tray clock, vector icons, and smooth launch/exit animations.
 
 ---
 
-## 🛠️ Tech Stack & Architecture
+## 🛠️ Technology Stack
 
-- **Framework**: React 19 + TypeScript (Strict Mode)
-- **Build Tool**: Vite
-- **Styling**: Tailwind CSS v4 + Custom Glassmorphism CSS Design System
-- **Animations**: Framer Motion, GSAP, HTML5 Canvas 2D Physics
-- **State Management**: Zustand
-- **Offline Storage**: LocalForage (IndexedDB / WebSQL / localStorage)
-- **Rich Text Editor**: TipTap (`@tiptap/react`, `@tiptap/starter-kit`, TaskList, TaskItem)
-- **Icons**: Lucide React (`lucide-react`)
-- **Date Formatting**: `date-fns`
+- **Framework**: React 19 + TypeScript + Vite
+- **Styling**: Tailwind CSS v4 + Vanilla CSS Design Tokens
+- **Animations**: Framer Motion (Shared Layout Transitions & Physics) + GSAP
+- **Editor**: TipTap Rich Text & Markdown Editor
+- **Storage**: LocalForage (IndexedDB / Async Storage)
+- **Audio**: Web Audio API Procedural Synthesizer
+- **Icons**: Lucide React
 
 ---
 
-## 📂 Project Structure
+## 🚀 Quick Start
 
-```
-LUMA/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── components/
-│   │   ├── background/
-│   │   │   ├── AuroraBackground.tsx
-│   │   │   └── NoiseOverlay.tsx
-│   │   ├── clipboard/
-│   │   │   └── ClipboardTimeline.tsx
-│   │   ├── command/
-│   │   │   └── CommandPalette.tsx
-│   │   ├── cursor/
-│   │   │   ├── LivingCursor.tsx
-│   │   │   └── ParticleTrail.tsx
-│   │   ├── dashboard/
-│   │   │   ├── HeaderGreeting.tsx
-│   │   │   ├── LiveClock.tsx
-│   │   │   ├── QuickActions.tsx
-│   │   │   ├── TodayGoals.tsx
-│   │   │   └── WeatherWidget.tsx
-│   │   ├── focus/
-│   │   │   └── FocusStudio.tsx
-│   │   ├── notes/
-│   │   │   ├── NotesModule.tsx
-│   │   │   └── TipTapEditor.tsx
-│   │   ├── onboarding/
-│   │   │   └── OnboardingTour.tsx
-│   │   ├── search/
-│   │   │   └── UniversalSearch.tsx
-│   │   ├── settings/
-│   │   │   └── SettingsModal.tsx
-│   │   └── vault/
-│   │       └── LinkVault.tsx
-│   ├── hooks/
-│   │   ├── useLivingCursor.ts
-│   │   ├── useMagnetic.ts
-│   │   └── useTilt3D.ts
-│   ├── services/
-│   │   └── storage.ts
-│   ├── store/
-│   │   ├── useClipboardStore.ts
-│   │   ├── useFocusStore.ts
-│   │   ├── useGoalsStore.ts
-│   │   ├── useNotesStore.ts
-│   │   ├── useSettingsStore.ts
-│   │   └── useVaultStore.ts
-│   ├── types/
-│   │   └── index.ts
-│   ├── utils/
-│   │   ├── audioSynth.ts
-│   │   └── cn.ts
-│   ├── App.tsx
-│   ├── index.css
-│   └── main.tsx
-├── index.html
-├── package.json
-├── tsconfig.json
-├── vite.config.ts
-└── README.md
+```bash
+# Clone repository
+git clone https://github.com/user/synora.git
+
+# Navigate to project
+cd synora
+
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Build production bundle
+npm run build
 ```
 
 ---
 
-## 💻 Installation & Setup
+## ⌨️ Keyboard Shortcuts
 
-1. **Clone or Download Repository**:
-   ```bash
-   cd LUMA
-   ```
-
-2. **Install Dependencies**:
-   ```bash
-   npm install
-   ```
-
-3. **Start Development Server**:
-   ```bash
-   npm run dev
-   ```
-
-4. **Build Production Bundle**:
-   ```bash
-   npm run build
-   ```
-
-5. **Lint Codebase**:
-   ```bash
-   npm run lint
-   ```
+- `Ctrl + Space` / `Cmd + Space`: Toggle SYNORA Spotlight Companion
+- `Ctrl + K`: Open Global Command Palette
+- `Ctrl + Enter`: Expand popup into target workspace
+- `Escape`: Minimize workspace to popup / exit to Desktop Demo scene
 
 ---
 
-## ⚡ Quality & Verification Metrics
-
-- **TypeScript Compilation**: `0 errors`
-- **Linter Check (oxlint)**: `0 warnings, 0 errors`
-- **Responsive Layout**: Desktop, Tablet, Mobile supported
-- **Accessibility**: ARIA labels, Keyboard-first navigation, Reduced-motion support
+SYNORA &copy; 2026. All rights reserved.

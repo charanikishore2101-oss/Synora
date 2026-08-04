@@ -2,8 +2,11 @@ import { create } from 'zustand';
 import type { ClipboardItem, ClipboardCategory } from '../types';
 import { getItem, setItem, StorageKeys } from '../services/storage';
 
+import { isColorString } from '../services/tauri';
+
 function categorizeText(content: string): ClipboardCategory {
   const trimmed = content.trim();
+  if (isColorString(trimmed)) return 'color';
   if (/^https?:\/\/[^\s]+$/i.test(trimmed)) return 'link';
   if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) return 'email';
   if (/^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/.test(trimmed) && trimmed.length >= 7) return 'phone';
@@ -22,8 +25,17 @@ function categorizeText(content: string): ClipboardCategory {
 
 const INITIAL_CLIPBOARD: ClipboardItem[] = [
   {
+    id: 'clip-color-1',
+    content: '#8b5cf6',
+    category: 'color',
+    pinned: true,
+    timestamp: Date.now() - 30000,
+    tags: ['theme', 'accent'],
+  },
+
+  {
     id: 'clip-1',
-    content: 'https://luma.workspace.design',
+    content: 'https://synora.workspace.design',
     category: 'link',
     pinned: true,
     timestamp: Date.now() - 120000,
@@ -31,14 +43,14 @@ const INITIAL_CLIPBOARD: ClipboardItem[] = [
   },
   {
     id: 'clip-2',
-    content: 'const lumaEngine = new LivingCursor({ velocity: 0.8, glow: true });',
+    content: 'const synoraEngine = new LivingCursor({ velocity: 0.8, glow: true });',
     category: 'code',
     pinned: false,
     timestamp: Date.now() - 600000,
   },
   {
     id: 'clip-3',
-    content: 'support@lumastartpage.com',
+    content: 'support@synora.design',
     category: 'email',
     pinned: false,
     timestamp: Date.now() - 1800000,

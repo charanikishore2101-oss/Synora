@@ -25,9 +25,9 @@ export function OnboardingTour() {
 
   const steps = [
     {
-      title: 'Welcome to LUMA',
-      subtitle: 'The Intelligent Start Page',
-      description: 'Transforming your browser New Tab into the most powerful, production-ready workspace on the web.',
+      title: 'Welcome to SYNORA',
+      subtitle: 'Personal Productivity Companion',
+      description: 'Everything you need. One shortcut away. Designed for deep flow and instant utility.',
       icon: Sparkles,
       color: 'from-violet-600 to-indigo-600',
     },
@@ -130,7 +130,7 @@ export function OnboardingTour() {
           >
             {currentStep === steps.length - 1 ? (
               <>
-                <CheckCircle2 className="w-4 h-4" /> Get Started with LUMA
+                <CheckCircle2 className="w-4 h-4" /> Get Started with SYNORA
               </>
             ) : (
               <>
