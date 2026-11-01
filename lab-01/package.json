@@ -1,0 +1,22 @@
+{
+  "name": "lab-01",
+  "version": "1.0.0",
+  "description": "Lab 01 - Node.js and Express Server | Student: Sree Charani | Reg: 252U1R3059 | Sec: CSE-DS-2B",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "start:basic": "node basic-server.js"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "server",
+    "lab"
+  ],
+  "author": "Sree Charani (252U1R3059)",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.3.0"
+  }
+}

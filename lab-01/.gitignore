@@ -1,0 +1,25 @@
+# ──────────────────────────────────────────
+# Git Ignore File for Lab-01
+# ──────────────────────────────────────────
+
+# Node.js dependencies — never commit these
+node_modules/
+
+# Environment variable files — keep secrets off GitHub
+.env
+.env.local
+.env.production
+
+# macOS junk files
+.DS_Store
+
+# Windows junk files
+Thumbs.db
+
+# IDE / Editor folders
+.vscode/
+.idea/
+
+# Log files
+*.log
+npm-debug.log*
