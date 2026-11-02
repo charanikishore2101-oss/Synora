@@ -17,6 +17,7 @@
 // 1. Import necessary modules
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const { open } = require('sqlite');
 const sqlite3 = require('sqlite3');
 
@@ -34,6 +35,22 @@ const dbPath = path.join(__dirname, 'books.db');
 
 // Global database variable to hold the active SQLite connection
 let db = null;
+let dbInitPromise = null;
+
+// Middleware ensuring database is ready before serving requests (critical for serverless / Vercel)
+app.use(async (req, res, next) => {
+  try {
+    if (!db) {
+      if (!dbInitPromise) {
+        dbInitPromise = initializeDBAndServer();
+      }
+      await dbInitPromise;
+    }
+    next();
+  } catch (err) {
+    res.status(500).json({ error: 'Database connection failed.' });
+  }
+});
 
 /**
  * Helper Validation Function
@@ -286,13 +303,28 @@ app.use((req, res) => {
  */
 const initializeDBAndServer = async () => {
   try {
+    // In serverless environments (e.g. Vercel), the deployment directory is read-only.
+    // We copy books.db to /tmp so SQLite has full read/write permissions.
+    let resolvedDbPath = dbPath;
+    if (process.env.VERCEL) {
+      const tmpPath = path.join('/tmp', 'books.db');
+      try {
+        if (!fs.existsSync(tmpPath) && fs.existsSync(dbPath)) {
+          fs.copyFileSync(dbPath, tmpPath);
+        }
+        resolvedDbPath = tmpPath;
+      } catch (e) {
+        console.error('Error copying books.db to /tmp:', e.message);
+      }
+    }
+
     // 1. Open SQLite database connection
     db = await open({
-      filename: dbPath,
+      filename: resolvedDbPath,
       driver: sqlite3.Database
     });
 
-    console.log(`[Database] SQLite connected successfully: ${dbPath}`);
+    console.log(`[Database] SQLite connected successfully: ${resolvedDbPath}`);
 
     // 2. Create the table if it does not exist
     await db.run(`
@@ -335,11 +367,14 @@ const initializeDBAndServer = async () => {
       console.log(`[Database] Database already contains ${rowCountResult.count} book(s). Skipping seeding.`);
     }
 
-    // 4. Start listening on the specified port (explicitly bind to 0.0.0.0 for Render / cloud containers)
-    const server = app.listen(PORT, '0.0.0.0', () => {
-      console.log(`[Server] Express server running on port ${PORT}`);
-      console.log(`[Server] Press Ctrl+C to stop.`);
-    });
+    // 4. Start listening on the specified port (if running as standalone server, not serverless)
+    let server = null;
+    if (!process.env.VERCEL) {
+      server = app.listen(PORT, '0.0.0.0', () => {
+        console.log(`[Server] Express server running on port ${PORT}`);
+        console.log(`[Server] Press Ctrl+C to stop.`);
+      });
+    }
 
     return { app, db, server };
   } catch (error) {
@@ -349,7 +384,9 @@ const initializeDBAndServer = async () => {
 };
 
 // Start the database and server
-initializeDBAndServer();
+dbInitPromise = initializeDBAndServer();
 
-// Export for testing purposes
-module.exports = { app, initializeDBAndServer };
+// Export for testing and serverless handlers (Vercel)
+app.app = app;
+app.initializeDBAndServer = initializeDBAndServer;
+module.exports = app;
