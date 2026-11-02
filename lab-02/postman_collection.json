@@ -1,0 +1,323 @@
+﻿{
+  "info": {
+    "_postman_id": "lab02-books-crud-collection",
+    "name": "Lab 02 - SQLite Database and CRUD Routes",
+    "description": "Postman Collection for college Lab 02 assignment by Grandhe Sree Charani (252U1R3059). Covers all 5 CRUD endpoints and validation test cases.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. GET All Books",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "books",
+            ""
+          ]
+        },
+        "description": "Retrieves all book records from the SQLite database. Returns status 200 OK."
+      },
+      "response": []
+    },
+    {
+      "name": "2. GET Book by ID (Success - ID 1)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/1/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "books",
+            "1",
+            ""
+          ]
+        },
+        "description": "Retrieves a single book with ID 1. Returns status 200 OK."
+      },
+      "response": []
+    },
+    {
+      "name": "3. GET Book by ID (404 Not Found)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/999/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "books",
+            "999",
+            ""
+          ]
+        },
+        "description": "Attempts to retrieve a non-existent book. Returns status 404 Not Found."
+      },
+      "response": []
+    },
+    {
+      "name": "4. GET Book by ID (400 Invalid ID)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/abc/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "books",
+            "abc",
+            ""
+          ]
+        },
+        "description": "Attempts to retrieve a book with non-numeric ID. Returns status 400 Bad Request."
+      },
+      "response": []
+    },
+    {
+      "name": "5. POST Add Book (Success)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Learning Node.js\",\n  \"author\": \"John Smith\",\n  \"price\": 450,\n  \"pages\": 320\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/books/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "books",
+            ""
+          ]
+        },
+        "description": "Inserts a new book into the database. Returns status 201 Created and the new bookId."
+      },
+      "response": []
+    },
+    {
+      "name": "6. POST Add Book (400 Missing Fields)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Missing Fields Book\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/books/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "books",
+            ""
+          ]
+        },
+        "description": "Attempts to insert a book with missing fields. Returns status 400 Bad Request."
+      },
+      "response": []
+    },
+    {
+      "name": "7. POST Add Book (400 Invalid Price or Pages)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Invalid Numbers Book\",\n  \"author\": \"Jane Doe\",\n  \"price\": -100,\n  \"pages\": 50.5\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/books/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "books",
+            ""
+          ]
+        },
+        "description": "Attempts to insert a book with negative price or decimal pages. Returns status 400 Bad Request."
+      },
+      "response": []
+    },
+    {
+      "name": "8. PUT Update Book (Success - ID 1)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Advanced Node.js\",\n  \"author\": \"John Smith\",\n  \"price\": 550,\n  \"pages\": 400\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/books/1/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "books",
+            "1",
+            ""
+          ]
+        },
+        "description": "Updates the book with ID 1. Returns status 200 OK."
+      },
+      "response": []
+    },
+    {
+      "name": "9. PUT Update Book (404 Not Found)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Non Existent Book\",\n  \"author\": \"No One\",\n  \"price\": 300,\n  \"pages\": 200\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/books/999/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "books",
+            "999",
+            ""
+          ]
+        },
+        "description": "Attempts to update a non-existent book. Returns status 404 Not Found."
+      },
+      "response": []
+    },
+    {
+      "name": "10. DELETE Book (Success - ID 1)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/1/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "books",
+            "1",
+            ""
+          ]
+        },
+        "description": "Deletes the book with ID 1. Returns status 200 OK."
+      },
+      "response": []
+    },
+    {
+      "name": "11. DELETE Book (404 Not Found)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/999/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "books",
+            "999",
+            ""
+          ]
+        },
+        "description": "Attempts to delete a non-existent book. Returns status 404 Not Found."
+      },
+      "response": []
+    }
+  ]
+}
