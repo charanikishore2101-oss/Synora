@@ -1,4 +1,4 @@
-﻿/**
+/**
  * =============================================================================
  * server.js
  * ---------
@@ -335,9 +335,9 @@ const initializeDBAndServer = async () => {
       console.log(`[Database] Database already contains ${rowCountResult.count} book(s). Skipping seeding.`);
     }
 
-    // 4. Start listening on the specified port
-    const server = app.listen(PORT, () => {
-      console.log(`[Server] Express server running at http://localhost:${PORT}/`);
+    // 4. Start listening on the specified port (explicitly bind to 0.0.0.0 for Render / cloud containers)
+    const server = app.listen(PORT, '0.0.0.0', () => {
+      console.log(`[Server] Express server running on port ${PORT}`);
       console.log(`[Server] Press Ctrl+C to stop.`);
     });
 
