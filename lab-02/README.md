@@ -1,7 +1,7 @@
 # Lab 02 — SQLite Database and CRUD Routes
 
-> **Live Link:** Not deployed yet.  
-> *(Application is prepared for deployment. See the Deployment Preparation section below.)*
+> **Live Link:** https://lab-02-wheat.vercel.app/  
+> *(Live production deployment on Vercel with serverless SQLite support)*
 
 ---
 
@@ -501,7 +501,7 @@ This application is fully prepared for deployment on modern cloud platforms.
   - Attach a **Persistent Disk Volume** to the service (e.g. Render Persistent Disk mounted at `/data` and set `dbPath = path.join('/data', 'books.db')`).
   - Or migrate to a managed cloud database such as PostgreSQL or MySQL for production environments.
 
-> ⚠️ **Note:** Deployment has not been performed yet. No deployment will occur without explicit permission.
+> ✅ **Live Status:** Deployed and verified on Vercel at [https://lab-02-wheat.vercel.app/](https://lab-02-wheat.vercel.app/). All 5 CRUD endpoints (`GET`, `POST`, `PUT`, `DELETE`) are fully operational.
 
 ---
 

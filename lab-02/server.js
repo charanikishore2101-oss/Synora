@@ -27,6 +27,8 @@ const app = express();
 // Middleware to parse incoming JSON payloads in request bodies
 app.use(express.json());
 
+
+
 // Port configuration: use platform port (e.g., Render/Railway) or default to 3000
 const PORT = process.env.PORT || 3000;
 
@@ -123,7 +125,7 @@ app.get('/', (req, res) => {
  * Purpose: Retrieve all book records from the database.
  * HTTP Status: 200 OK
  */
-app.get('/books/', async (req, res) => {
+app.get(['/books', '/books/'], async (req, res) => {
   try {
     const getBooksQuery = 'SELECT * FROM book ORDER BY id ASC;';
     const booksArray = await db.all(getBooksQuery);
@@ -139,7 +141,7 @@ app.get('/books/', async (req, res) => {
  * Purpose: Retrieve a single book using its primary key ID.
  * HTTP Status: 200 OK (found), 400 Bad Request (invalid ID), 404 Not Found (absent)
  */
-app.get('/books/:bookId/', async (req, res) => {
+app.get(['/books/:bookId', '/books/:bookId/'], async (req, res) => {
   try {
     const bookId = parseAndValidateBookId(req.params.bookId);
     if (bookId === null) {
@@ -166,7 +168,7 @@ app.get('/books/:bookId/', async (req, res) => {
  * Purpose: Add a new book to the database.
  * HTTP Status: 201 Created (success), 400 Bad Request (invalid input)
  */
-app.post('/books/', async (req, res) => {
+app.post(['/books', '/books/'], async (req, res) => {
   try {
     const validationError = validateBookPayload(req.body);
     if (validationError) {
@@ -203,7 +205,7 @@ app.post('/books/', async (req, res) => {
  * Purpose: Update an existing book's details.
  * HTTP Status: 200 OK (updated), 400 Bad Request (invalid ID or body), 404 Not Found (absent)
  */
-app.put('/books/:bookId/', async (req, res) => {
+app.put(['/books/:bookId', '/books/:bookId/'], async (req, res) => {
   try {
     const bookId = parseAndValidateBookId(req.params.bookId);
     if (bookId === null) {
@@ -254,7 +256,7 @@ app.put('/books/:bookId/', async (req, res) => {
  * Purpose: Delete an existing book by ID.
  * HTTP Status: 200 OK (deleted), 400 Bad Request (invalid ID), 404 Not Found (absent)
  */
-app.delete('/books/:bookId/', async (req, res) => {
+app.delete(['/books/:bookId', '/books/:bookId/'], async (req, res) => {
   try {
     const bookId = parseAndValidateBookId(req.params.bookId);
     if (bookId === null) {
