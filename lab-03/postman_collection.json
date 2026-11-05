@@ -1,0 +1,433 @@
+{
+  "info": {
+    "_postman_id": "lab-03-rest-api-sree-charani",
+    "name": "Lab 03 - REST API, Query Parameters, Validation & Debugging",
+    "description": "Comprehensive Postman test collection for Lab 03 covering CRUD, search, sorting, filtering, pagination, and input validation.\nStudent: Sree Charani (252U1R3059) | Section: CSE-DS-2B",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Retrieve All Books",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/books",
+          "host": ["{{base_url}}"],
+          "path": ["books"]
+        },
+        "description": "Fetches all book records from SQLite database with default pagination (limit 10, offset 0)."
+      }
+    },
+    {
+      "name": "2. Retrieve Book by ID (Found)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/books/1",
+          "host": ["{{base_url}}"],
+          "path": ["books", "1"]
+        },
+        "description": "Fetches single book with ID 1 ('The Pragmatic Programmer'). Expected Status: 200 OK."
+      }
+    },
+    {
+      "name": "3. Create Book (Valid Data)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Designing Cloud Applications\",\n  \"author\": \"Jane Doe\",\n  \"price\": 620,\n  \"pages\": 410\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/books",
+          "host": ["{{base_url}}"],
+          "path": ["books"]
+        },
+        "description": "Creates a new book. Expected Status: 201 Created."
+      }
+    },
+    {
+      "name": "4. Update Existing Book",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"The Pragmatic Programmer (20th Anniversary Edition)\",\n  \"author\": \"David Thomas & Andrew Hunt\",\n  \"price\": 650,\n  \"pages\": 360\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/books/1",
+          "host": ["{{base_url}}"],
+          "path": ["books", "1"]
+        },
+        "description": "Updates book with ID 1. Expected Status: 200 OK."
+      }
+    },
+    {
+      "name": "5. Delete Existing Book",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/books/11",
+          "host": ["{{base_url}}"],
+          "path": ["books", "11"]
+        },
+        "description": "Deletes book with ID 11. Expected Status: 200 OK."
+      }
+    },
+    {
+      "name": "6. Search Books using search_q",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/books?search_q=JavaScript",
+          "host": ["{{base_url}}"],
+          "path": ["books"],
+          "query": [
+            {
+              "key": "search_q",
+              "value": "JavaScript"
+            }
+          ]
+        },
+        "description": "Partial title search using SQL LIKE %JavaScript%. Expected Status: 200 OK."
+      }
+    },
+    {
+      "name": "7a. Sort Books by Price ASC",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/books?order_by=price&order=ASC",
+          "host": ["{{base_url}}"],
+          "path": ["books"],
+          "query": [
+            {
+              "key": "order_by",
+              "value": "price"
+            },
+            {
+              "key": "order",
+              "value": "ASC"
+            }
+          ]
+        },
+        "description": "Sorts books ascending by price. Expected Status: 200 OK."
+      }
+    },
+    {
+      "name": "7b. Sort Books by Price DESC",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/books?order_by=price&order=DESC",
+          "host": ["{{base_url}}"],
+          "path": ["books"],
+          "query": [
+            {
+              "key": "order_by",
+              "value": "price"
+            },
+            {
+              "key": "order",
+              "value": "DESC"
+            }
+          ]
+        },
+        "description": "Sorts books descending by price. Expected Status: 200 OK."
+      }
+    },
+    {
+      "name": "8a. Pagination (Limit 4, Offset 0)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/books?limit=4&offset=0",
+          "host": ["{{base_url}}"],
+          "path": ["books"],
+          "query": [
+            {
+              "key": "limit",
+              "value": "4"
+            },
+            {
+              "key": "offset",
+              "value": "0"
+            }
+          ]
+        },
+        "description": "Fetches page 1 of records (limit 4). Expected Status: 200 OK."
+      }
+    },
+    {
+      "name": "8b. Pagination (Limit 4, Offset 4)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/books?limit=4&offset=4",
+          "host": ["{{base_url}}"],
+          "path": ["books"],
+          "query": [
+            {
+              "key": "limit",
+              "value": "4"
+            },
+            {
+              "key": "offset",
+              "value": "4"
+            }
+          ]
+        },
+        "description": "Fetches page 2 of records (skips 4 records). Expected Status: 200 OK."
+      }
+    },
+    {
+      "name": "9. Price Range Filter (min_price & max_price)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/books?min_price=400&max_price=700",
+          "host": ["{{base_url}}"],
+          "path": ["books"],
+          "query": [
+            {
+              "key": "min_price",
+              "value": "400"
+            },
+            {
+              "key": "max_price",
+              "value": "700"
+            }
+          ]
+        },
+        "description": "Filters books with price >= 400 and price <= 700. Expected Status: 200 OK."
+      }
+    },
+    {
+      "name": "10. Validation: Create Book with Missing Title",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"author\": \"Jane Doe\",\n  \"price\": 500\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/books",
+          "host": ["{{base_url}}"],
+          "path": ["books"]
+        },
+        "description": "Fails validation due to missing title. Expected Status: 400 Bad Request."
+      }
+    },
+    {
+      "name": "11. Validation: Create Book with Missing Author",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Book Without Author\",\n  \"price\": 500\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/books",
+          "host": ["{{base_url}}"],
+          "path": ["books"]
+        },
+        "description": "Fails validation due to missing author. Expected Status: 400 Bad Request."
+      }
+    },
+    {
+      "name": "12. Validation: Create Book with Non-Numeric Price",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Book Title\",\n  \"author\": \"Author Name\",\n  \"price\": \"five hundred\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/books",
+          "host": ["{{base_url}}"],
+          "path": ["books"]
+        },
+        "description": "Fails validation because price is not a number. Expected Status: 400 Bad Request."
+      }
+    },
+    {
+      "name": "13. Retrieve Non-Existing Book ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/books/99999",
+          "host": ["{{base_url}}"],
+          "path": ["books", "99999"]
+        },
+        "description": "Expected Status: 404 Not Found with {\"message\":\"Book not found\"}."
+      }
+    },
+    {
+      "name": "14. Update Non-Existing Book ID",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Ghost Book\",\n  \"author\": \"Ghost Author\",\n  \"price\": 500\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/books/99999",
+          "host": ["{{base_url}}"],
+          "path": ["books", "99999"]
+        },
+        "description": "Expected Status: 404 Not Found with {\"message\":\"Book not found\"}."
+      }
+    },
+    {
+      "name": "15. Delete Non-Existing Book ID",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/books/99999",
+          "host": ["{{base_url}}"],
+          "path": ["books", "99999"]
+        },
+        "description": "Expected Status: 404 Not Found with {\"message\":\"Book not found\"}."
+      }
+    },
+    {
+      "name": "16a. Validation: Invalid order_by Column",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/books?order_by=secret_column",
+          "host": ["{{base_url}}"],
+          "path": ["books"],
+          "query": [
+            {
+              "key": "order_by",
+              "value": "secret_column"
+            }
+          ]
+        },
+        "description": "Expected Status: 400 Bad Request (column not in whitelist)."
+      }
+    },
+    {
+      "name": "16b. Validation: min_price > max_price",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/books?min_price=900&max_price=200",
+          "host": ["{{base_url}}"],
+          "path": ["books"],
+          "query": [
+            {
+              "key": "min_price",
+              "value": "900"
+            },
+            {
+              "key": "max_price",
+              "value": "200"
+            }
+          ]
+        },
+        "description": "Expected Status: 400 Bad Request (min_price cannot exceed max_price)."
+      }
+    },
+    {
+      "name": "17. Combined Search, Filter, Sort & Pagination",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/books?search_q=a&min_price=300&max_price=850&order_by=price&order=DESC&limit=3&offset=0",
+          "host": ["{{base_url}}"],
+          "path": ["books"],
+          "query": [
+            {
+              "key": "search_q",
+              "value": "a"
+            },
+            {
+              "key": "min_price",
+              "value": "300"
+            },
+            {
+              "key": "max_price",
+              "value": "850"
+            },
+            {
+              "key": "order_by",
+              "value": "price"
+            },
+            {
+              "key": "order",
+              "value": "DESC"
+            },
+            {
+              "key": "limit",
+              "value": "3"
+            },
+            {
+              "key": "offset",
+              "value": "0"
+            }
+          ]
+        },
+        "description": "Complex multi-parameter test returning top 3 books matching search, price, sorted DESC. Expected Status: 200 OK."
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ]
+}
