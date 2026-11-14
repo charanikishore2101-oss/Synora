@@ -1,0 +1,228 @@
+{
+  "info": {
+    "_postman_id": "lab-04-auth-jwt-collection",
+    "name": "Lab 04 - Registration, Login and JWT Authentication",
+    "description": "Postman API Collection for Backend Development Fundamentals Lab 04 by Sree Charani (Reg: 252U1R3059). Covers user registration, duplicate user rejection, input validations, login with bcrypt password matching, and JWT token generation.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Successful Registration (POST /register/)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"sreecharani\",\n  \"name\": \"Sree Charani\",\n  \"password\": \"mypassword123\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/register/",
+          "host": ["{{base_url}}"],
+          "path": ["register", ""]
+        },
+        "description": "Registers a new user account with bcrypt password hashing. Returns 201 Created."
+      }
+    },
+    {
+      "name": "2. Duplicate Username Rejection (POST /register/)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"sreecharani\",\n  \"name\": \"Sree Charani\",\n  \"password\": \"mypassword123\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/register/",
+          "host": ["{{base_url}}"],
+          "path": ["register", ""]
+        },
+        "description": "Attempts to register the same username again. Returns 400 Bad Request with 'User already exists'."
+      }
+    },
+    {
+      "name": "3. Registration Missing Username (POST /register/)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Sree Charani\",\n  \"password\": \"mypassword123\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/register/",
+          "host": ["{{base_url}}"],
+          "path": ["register", ""]
+        },
+        "description": "Validation test for missing username. Returns 400 Bad Request."
+      }
+    },
+    {
+      "name": "4. Registration Missing Name (POST /register/)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"sreecharani\",\n  \"password\": \"mypassword123\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/register/",
+          "host": ["{{base_url}}"],
+          "path": ["register", ""]
+        },
+        "description": "Validation test for missing name. Returns 400 Bad Request."
+      }
+    },
+    {
+      "name": "5. Registration Missing Password (POST /register/)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"sreecharani\",\n  \"name\": \"Sree Charani\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/register/",
+          "host": ["{{base_url}}"],
+          "path": ["register", ""]
+        },
+        "description": "Validation test for missing password. Returns 400 Bad Request."
+      }
+    },
+    {
+      "name": "6. Successful Login (POST /login/)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"sreecharani\",\n  \"password\": \"mypassword123\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/login/",
+          "host": ["{{base_url}}"],
+          "path": ["login", ""]
+        },
+        "description": "Authenticates valid credentials against bcrypt hash and returns a signed JWT token. Returns 200 OK."
+      }
+    },
+    {
+      "name": "7. Login Unknown Username (POST /login/)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"unknownuser\",\n  \"password\": \"mypassword123\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/login/",
+          "host": ["{{base_url}}"],
+          "path": ["login", ""]
+        },
+        "description": "Attempts to login with a non-existent username. Returns 400 Bad Request with 'Invalid user'."
+      }
+    },
+    {
+      "name": "8. Login Incorrect Password (POST /login/)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"sreecharani\",\n  \"password\": \"wrongpassword\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/login/",
+          "host": ["{{base_url}}"],
+          "path": ["login", ""]
+        },
+        "description": "Attempts to login with wrong password. bcrypt.compare fails. Returns 400 Bad Request with 'Invalid password'."
+      }
+    },
+    {
+      "name": "9. Login Missing Credentials (POST /login/)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"sreecharani\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/login/",
+          "host": ["{{base_url}}"],
+          "path": ["login", ""]
+        },
+        "description": "Validation test for missing password in login. Returns 400 Bad Request."
+      }
+    },
+    {
+      "name": "10. Inspect Database Users (GET /users)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/users",
+          "host": ["{{base_url}}"],
+          "path": ["users"]
+        },
+        "description": "Inspects SQLite user table to verify passwords are stored as bcrypt hashes ($2b$10$...)."
+      }
+    }
+  ]
+}
